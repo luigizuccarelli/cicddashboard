@@ -48,11 +48,22 @@ class _HomePageState extends State<HomePage> {
   List<TableRow> tablerow = [];
   List<TableCell> tablecell = [];
   int count = 0;
+  int _selectedIndex = 0;
+
 
   @override
   void initState() {
     super.initState();
     project = _fetchProject();
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      count = 0;
+      tablerow = [];
+      tablecell = [];
+      _selectedIndex = index;
+    });
   }
 
   // routine to build buttons from json (cicd)
@@ -156,6 +167,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Index 1: Info',
+      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    ),
+    Text(
+      'Index 2: Contact',
+      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,6 +231,27 @@ class _HomePageState extends State<HomePage> {
             return CircularProgressIndicator();
           },
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey[850],
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            title: Text('Info'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            title: Text('Contact'),
+          ),
+        ],
+        unselectedItemColor: Colors.grey[600],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        onTap: _onItemTapped,
       ),
     );
   }
