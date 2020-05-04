@@ -35,6 +35,7 @@ class Project {
 }
 
 class Payload {
+  String id;
   String project;
   String scm;
   String workdir;
@@ -43,7 +44,8 @@ class Payload {
   String metainfo;
 
   Payload(
-      {this.project,
+      {this.id,
+      this.project,
       this.scm,
       this.workdir,
       this.force,
@@ -51,6 +53,7 @@ class Payload {
       this.metainfo});
 
   Payload.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     project = json['project'];
     scm = json['scm'];
     workdir = json['workdir'];
@@ -66,6 +69,7 @@ class Payload {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['project'] = this.project;
     data['scm'] = this.scm;
     data['workdir'] = this.workdir;
