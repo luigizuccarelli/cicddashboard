@@ -63,13 +63,13 @@ class CicdApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CICD Dashboard [Project X]',
+      title: 'CICD Dashboard [ Project golang microservice utils ]',
       theme: ThemeData(
         primaryColor: Colors.grey[900],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(
-        title: 'CICD Dashboard [Project X]',
+        title: 'CICD Dashboard [ Project golang microservice utils ]',
       ),
     );
   }
@@ -98,6 +98,12 @@ class _HomePageState extends State<HomePage> {
     project = _fetchProject();
     WebSocket.instance.init(3);
     resetColors('all');
+    // all good we set our timer interval
+    Timer.periodic(new Duration(seconds: 300), (timer) {
+      var now = new DateTime.now();
+      debugPrint('[INFO] ${now}'); 
+      WebSocket.instance.add('poll');
+    });
   }
 
   void resetColors(String id) {
@@ -304,18 +310,18 @@ class _HomePageState extends State<HomePage> {
                       count = 0;
                       tablerow = [];
                       tablecell = [];
-                      WebSocket.instance.add('poll');
+                      WebSocket.instance.add(p.id + '-force');
                     });
                   },
                 ),
                 RaisedButton(
                   color: Colors.grey[900],
                   child: const Text(
-                    'CANCEL',
+                    'TEST',
                     style: TextStyle(fontSize: 12),
                   ),
                   onPressed: () {
-                    WebSocket.instance.add('test');
+                    WebSocket.instance.add(p.id + '-test');
                   },
                 ),
               ],
